@@ -10,13 +10,17 @@
     <title>@yield('title')</title>
   </head>
   <body>
-      
-    @include('layout.side')
-
-    <div class="container">
-            @yield('content')
+    @include('layout.header')
+    <div class="main">
+        <div class="row">
+            <div class="col-2">
+                @include('layout.side') 
+            </div>
+            <div class="col-10">
+                @yield('content')
+            </div>
+        </div>
     </div>
-    
     @include('layout.footer')
 
     <!-- Optional JavaScript -->
