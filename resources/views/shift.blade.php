@@ -2,11 +2,14 @@
 
 @section('title', 'shift')
 
-@section('sidebar')
+@section('side')
     @parent
 
 @endsection
 
 @section('content')
+    <div>
+        <p>test<p>
+    </div>
     
 @endsection
