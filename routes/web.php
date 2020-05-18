@@ -12,5 +12,5 @@
 */
 
 Route::get('/shift', function () {
-    return view('shift');
+    return view('shifts.index');
 });
