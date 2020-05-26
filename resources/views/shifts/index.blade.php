@@ -49,6 +49,8 @@
                       </table>
                 </div>
                 <div>
+                  {{-- <form method="post" --}}
+                  {{-- {{!! csrf_filed() !!}} --}}
                 <button type="submit" class="btn btn-primary mt-5" style="width: 100px" id="submit">申請</button>
                 </div>
             </div>
