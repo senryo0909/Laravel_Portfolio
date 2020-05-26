@@ -11,6 +11,11 @@
 |
 */
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/shift', function () {
     return view('shift');
-});
+})->middleware('auth');
+
+
