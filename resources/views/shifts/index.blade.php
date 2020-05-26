@@ -26,6 +26,16 @@
                           </tr>
                         </thead>
                         <tbody>
+                        {{-- shiftsテーブル作成後に移行させたい処理をコメントで表示 --}}
+                        {{-- @forelse($shifts as $shift) --}}
+
+                          {{-- <tr>
+                            <td><input type="text" id="type" name="type" maxlength="2" value="{{ $shift->date}}"></td>
+                            <td><input type="text" id="start" name="start" maxlength="5" value="{{ $shift->start_time }}"></td>
+                            <td><input type="text" id="end" name="end" maxlength="5" value="{{ $shift->end_time }}"></td>
+                            <td><input type="text" id="rest" name="rest" maxlength="5" value="{{ $shift->rest_time }}"></td>
+                            <td><input type="text" id="total" name="total" maxlength="5" value="{{ $shift->total }}"></td>
+                            <td><input type="text" id="comment" name="comment" maxlength="5" value="{{ $shift->comment }}"></td> --}}
                           <tr>
                             <td>01/03/2020</td>
                             <td><input type="text" id="type" name="type" maxlength="2" value="" placeholder="出勤/欠勤/有給/半休/早退"></td>
