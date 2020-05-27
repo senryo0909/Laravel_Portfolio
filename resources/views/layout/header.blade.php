@@ -6,7 +6,7 @@
             {{-- <a href="{{!! url('/individual', [$user->id] !!}}" class="mr-3 text-danger">
             <a href="{{!! url('/logout', [$user->id] !!}}" class="mr-3 text-danger"> --}}
 
-                <a href="#" class="mr-3 text-danger">user</a>
+                <a href="#" class="mr-3 text-danger">{{ Auth::user()->name }}さん</a>
                 <a href="#" class="text-danger">logout</a>
           </div>
         </div>
