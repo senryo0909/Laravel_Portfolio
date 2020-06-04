@@ -11,11 +11,11 @@
 |
 */
 
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function(){
-Route::get('/shift', function () {
-    return view('shifts.index');
+Route::get('/shift', 'ShiftController@index')->name('index');
 });
-});
+
