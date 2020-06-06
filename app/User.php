@@ -36,4 +36,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    //Usersテーブルはshiftsレコード全体に対して、1レコードにつき複数のレコードと紐づいている。
+    public function shift(){
+        return $this->hasMany('App\Shift');
+    }
+    //Usersテーブルはmanagementsレコード全体に対して、1レコードにつき複数のレコードと紐づいている。
+    public function management(){
+        return $this->hasMany('App\Management');
+    }
+
 }
