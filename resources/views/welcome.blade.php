@@ -11,7 +11,58 @@
 
         <!-- Styles -->
         <style>
-            html, body {
+            .main{
+                text-align: center;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <main class="main">
+            <h1>ようこそ業務管理アプリへ</h1>
+            <div>
+                <p>従業員はこちら</p>
+                <a href="{{ route('user.login') }}">ログイン</a>
+            </div>
+            <div>
+                <p>管理者はこちら</p>
+                <a href="{{ route('admin.login') }}">ログイン</a>
+            </div>
+        </main>
+        <!-- <div class="flex-center position-ref full-height">
+            @if (Route::has('login'))
+                <div class="top-right links">
+                    @auth
+                        <a href="{{ url('/home') }}">Home</a>
+                    @else
+                        <a href="{{ route('login') }}">Login</a>
+
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}">Register</a>
+                        @endif
+                    @endauth
+                </div>
+            @endif
+
+            <div class="content">
+                <div class="title m-b-md">
+                    Laravel
+                </div>
+
+                <div class="links">
+                    <a href="https://laravel.com/docs">Docs</a>
+                    <a href="https://laracasts.com">Laracasts</a>
+                    <a href="https://laravel-news.com">News</a>
+                    <a href="https://blog.laravel.com">Blog</a>
+                    <a href="https://nova.laravel.com">Nova</a>
+                    <a href="https://forge.laravel.com">Forge</a>
+                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                </div>
+            </div>
+        </div> -->
+    </body>
+</html>
+<!-- html, body {
                 background-color: #fff;
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
@@ -60,40 +111,4 @@
 
             .m-b-md {
                 margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+            }   -->
