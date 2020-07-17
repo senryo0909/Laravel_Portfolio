@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'user',
         'passwords' => 'users',
     ],
 
@@ -36,16 +36,32 @@ return [
     */
 
     'guards' => [
+        //7/5追加
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
+        //7/5ここまで
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+       
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+        //7/5追加
+        'admin-api' => [
+            'driver' => 'token',
+            'provider' => 'admins',
+        ],
+        //7/5ここまで
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
             'hash' => false,
-        ],
+        ]
     ],
 
     /*
@@ -68,8 +84,13 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Models\User::class,
         ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ]
 
         // 'users' => [
         //     'driver' => 'database',
@@ -97,7 +118,16 @@ return [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
+            // 'throttle' => 60,
+            //7/5コメントアウト
         ],
-    ],
-
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+            // 'throttle' => 60,
+            //7/5コメントアウト
+        ]
+        ],
+        'password_timeout' => 10800,
 ];
