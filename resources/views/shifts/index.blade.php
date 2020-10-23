@@ -7,12 +7,13 @@
 
 @section('content')
 <div class="mt-1">
+    {{-- 過去未来のシフト検索 --}}
     <div style="width: 100%">
         <a class="btn btn-primary text-light d-inline-block" href="{{ route('user.shifts.switch', ['dates' => date('Y-m-d', strtotime(date($dateNum).'-1 month')) ]) }}" role="button" style="width:100px">前月</a>
         <a class="d-inline-block" style="font-size: 2rem; width: 250px;">{!! substr($dates[0], 0, 4) !!}年{!! substr($dates[0], 5, 2) !!}月の勤務状況</a>
         <a class="d-inline-block text-light btn btn-primary" href="{{ route('user.shifts.switch', ['dates' => date('Y-m-d', strtotime(date($dateNum).'+1 month')) ]) }}" role="button" style="width:100px">次月</a>
     </div>
-  
+    　{{-- シフト入力項目 --}}
     <div class="mt-5">
         <table class="table-bordered text-center mr-auto ml-auto w-100">
             <thead>
@@ -26,68 +27,73 @@
                 <th scope="col" style="width: 100px">備考</th>
               </tr>
             </thead>   
-            <tbody>
+        <tbody>
 
-              {{-- 勤怠入力あり--}}
+      {{-- 勤怠入力済みの表示のスタート地点 --}}
 
+      {{--　年月日表示 --}}
       @foreach($dates as $date)
         @if(isset($shifts[$date]))
-        <!-- 土日は赤字-->
+      {{--　土日は赤字で表示 --}}
+      {{-- ？土日は赤字で表示は、233行目でも書く必要ある？　--}}
         @if(substr($shifts[$date]->date, -5, 5) === '(土)' || substr($shifts[$date]->date, -5, 5) === '(日)')
           <tr style="color: red;">
         @else
           <tr>
         @endif
-  <td>{{ $shifts[$date]->date }}</td>
-    <td style="height: 10px;">
-    <select id="1" name="work_type_id" data-id="{{ $shifts[$date]->id }}" data-date="{{ $shifts[$date]->date }}" style="display: inline-block; width: 100%; height: 100%">
-    @if($shifts[$date]->work_type_id === null)
-      @for($i = 0; $i < 7; $i++)
-          @if($i === 0)
-            <?php $type = '選択してね'; ?>
-          @elseif($i === 1)
-            <?php $type = '出勤'; ?>
-          @elseif($i === 2)
-            <?php $type = '有給'; ?>
-          @elseif($i === 3)
-            <?php $type = '欠勤'; ?>
-          @elseif($i === 4)
-            <?php $type = '早退'; ?>
-          @elseif($i === 5)
-            <?php $type = '半休'; ?>
-          @elseif($i === 6)
-            <?php $type = '休日'; ?>
-          @endif  
-        <option value="{{ $i }}">{{ $type }}</option>
-      @endfor
-    
-    @elseif($shifts[$date]->work_type_id === 1 || $shifts[$date]->work_type_id === 2 || $shifts[$date]->work_type_id === 3 || $shifts[$date]->work_type_id === 4 || $shifts[$date]->work_type_id === 5 || $shifts[$date]->work_type_id === 6)
-      
-      @for($i = 1; $i < 7; $i++)
-          @if($i === 1)
-            <?php $type = '出勤'; ?>
-          @elseif($i === 2)
-            <?php $type = '有給'; ?>
-          @elseif($i === 3)
-            <?php $type = '欠勤'; ?>
-          @elseif($i === 4)
-            <?php $type = '早退'; ?>
-          @elseif($i === 5)
-            <?php $type = '半休'; ?>
-          @elseif($i === 6)
-            <?php $type = '休日'; ?>
-          @endif
+            <td>{{ $shifts[$date]->date }}</td>
+            <td style="height: 10px;">
+      {{-- 勤務形態（入力済み）の表示 --}}
+      {{-- ?  勤怠入力済みなら、work_type_id（勤務形態）は、nullでは無いから（土日出勤もありうるので、土日は完全週休2日なら休日 --}}
+            <select id="true" name="work_type_id" data-id="{{ $shifts[$date]->id }}" data-date="{{ $shifts[$date]->date }}" style="display: inline-block; width: 100%; height: 100%">
+              @if($shifts[$date]->work_type_id === null)
+                @for($i = 0; $i < 7; $i++)
+                    @if($i === 0)
+                      <?php $type = '選択してね'; ?>
+                    @elseif($i === 1)
+                      <?php $type = '出勤'; ?>
+                    @elseif($i === 2)
+                      <?php $type = '有給'; ?>
+                    @elseif($i === 3)
+                      <?php $type = '欠勤'; ?>
+                    @elseif($i === 4)
+                      <?php $type = '早退'; ?>
+                    @elseif($i === 5)
+                      <?php $type = '半休'; ?>
+                    @elseif($i === 6)
+                      <?php $type = '休日'; ?>
+                    @endif  
+                  <option value="{{ $i }}">{{ $type }}</option>
+                  
+                @endfor
+              
+              @elseif($shifts[$date]->work_type_id === 1 || $shifts[$date]->work_type_id === 2 || $shifts[$date]->work_type_id === 3 || $shifts[$date]->work_type_id === 4 || $shifts[$date]->work_type_id === 5 || $shifts[$date]->work_type_id === 6)
+                
+                @for($i = 1; $i < 7; $i++)
+                    @if($i === 1)
+                      <?php $type = '出勤'; ?>
+                    @elseif($i === 2)
+                      <?php $type = '有給'; ?>
+                    @elseif($i === 3)
+                      <?php $type = '欠勤'; ?>
+                    @elseif($i === 4)
+                      <?php $type = '早退'; ?>
+                    @elseif($i === 5)
+                      <?php $type = '半休'; ?>
+                    @elseif($i === 6)
+                      <?php $type = '休日'; ?>
+                    @endif
 
-            @if($shifts[$date]->work_type_id === $i)
-              <option selected value="{{ $shifts[$date]->work_type_id }}">{{ $type }}</option>
-            @elseif($shifts[$date]->work_type_id !== $i)
-              <option value="{{ $i }}">{{ $type }}</option>
-            @endif
+                    @if($shifts[$date]->work_type_id === $i)
+                      <option selected value="{{ $shifts[$date]->work_type_id }}">{{ $type }}</option>
+                    @elseif($shifts[$date]->work_type_id !== $i)
+                      <option value="{{ $i }}">{{ $type }}</option>
+                    @endif
 
-      @endfor
-    @endif
-    </select>
-  </td>  
+                @endfor
+              @endif
+              </select>
+            </td>  
   
   <td style="height: 10px;">
   <select name="start_time" data-id="{{ $shifts[$date]->id }}" data-date="{{ $shifts[$date]->date }}" style="display: inline-block; width: 100%; height: 100%">
@@ -209,7 +215,9 @@
     </select>
   </td>
 
-  <td><input type="text" data-id="{{ $shifts[$date]->id }}" data-date="{{ $shifts[$date]->date }}" name="comments" maxlength="5" value="{{ $shifts[$date]->comments }}" placeholder="自由記載" style="display: inline-block; width: 100%;"></td>
+  <td>
+    <input type="text" data-id="{{ $shifts[$date]->id }}" data-date="{{ $shifts[$date]->date }}" name="comments" maxlength="5" value="{{ $shifts[$date]->comments }}" placeholder="自由記載" style="display: inline-block; width: 100%;">
+  </td>
   <input type="hidden" data-id="{{ $shifts[$date]->id }}" data-date="{{ $shifts[$date]->date }}" name="monthly_id" value="{{ $shifts[$date]->monthly_id }}">
   <input type="hidden" data-id="{{ $shifts[$date]->id }}" data-date="{{ $shifts[$date]->date }}" name="user_id" value="{{ $shifts[$date]->user_id }}">
   @if(isset($shifts[$date]->management->approval->status_descriptions_id))
@@ -218,7 +226,7 @@
   <input type="hidden" id="first_day" value="{{ $dates[0] }}">
 </tr>
 
-    @else
+  @else
 
   <!-- 勤怠入力なし -->
   <!-- 土日は赤字 -->
@@ -229,7 +237,7 @@
   @endif
         <td>{{ $date }}</td>
         <td style="height: 10px">
-          <select name="work_type_id" data-id="" data-date="{{ $date }}" style="display: inline-block; width: 100%; height: 100%;">
+          <select id="false" name="work_type_id" data-id="" data-date="{{ $date }}" style="display: inline-block; width: 100%; height: 100%;">
                 <option value="0">選択してね</option>
                 <option value="1">出勤</option>
                 <option value="2">有給</option>
@@ -293,7 +301,7 @@
     </div>
     <div>
      
-    <button disabled type="submit" class="btn btn-primary mt-5" style="width: 100px" id="submit">申請</button>
+    <button type="submit" class="btn btn-primary mt-5" style="width: 100px" id="submit">申請</button>
     </div>
 </div>
 @endsection
