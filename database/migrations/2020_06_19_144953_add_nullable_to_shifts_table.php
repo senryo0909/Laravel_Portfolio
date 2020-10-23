@@ -22,8 +22,8 @@ class AddNullableToShiftsTable extends Migration
             $table->time('rest_time')->nullable()->change();
             $table->time('total')->nullable()->change();
             $table->text('comments')->nullable()->change();
-            $table->unsignedBigInteger('monthly_id')->nullable()->change();
-            $table->unsignedBigInteger('work_type_id')->nullable()->change();
+            $table->unsignedBigInteger('monthly_id')->nullable();
+            $table->unsignedBigInteger('work_type_id')->nullable();
 
             
         });
