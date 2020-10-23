@@ -2,22 +2,21 @@
 //adminユーザーの承認関連に関するcontroller
 
 namespace App\Http\Controllers\Admin;
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+use App\Http\Requests\ApprovalRequest;
+
 use App\Shift;
 use App\Models\User;
 use App\Management;
 use App\ShiftsApproval;
 use App\StatusDescription;
-use App\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\Model;
-use App\Http\Requests\ApprovalRequest;
 
-
-
-
-class ApprovalController extends Controller{
-
+class ApprovalController extends Controller
+{
      public $year = '';
      public $month = '';
      public $day = '';
@@ -35,34 +34,33 @@ class ApprovalController extends Controller{
       * @author taku
       * @version 1.1
      */
-    private function CurrentDate($date = null){
+    private function CurrentDate($date = null)
+    {
         if(!$date){
-        $date = date('Y-m-d-w');
+            $date = date('Y-m-d-w');
         }
         //該当月の最終日を$ldに取得
-            $this->ld = date('d', strtotime('last day of' . $date));
-            list($this->year, $this->month, $this->day) = explode("-", $date);
-           
-            for($i = 1; $i <= $this->ld; $i++){
-                        $this->dates[] = 
-                        $this->year . 
-                        '-' . 
-                        $this->month . 
-                        '-' . 
-                        str_pad($i, 2, "0", STR_PAD_LEFT) . 
-                        $this->weeks[
-                            date('w', strtotime($this->year . $this->month . str_pad($i, 2, "0", STR_PAD_LEFT)
-                            ))
-                        ]; 
+        $this->ld = date('d', strtotime('last day of' . $date));
+        list($this->year, $this->month, $this->day) = explode("-", $date);
+        
+        for($i = 1; $i <= $this->ld; $i++){
+            $this->dates[] = 
+            $this->year . 
+            '-' . 
+            $this->month . 
+            '-' . 
+            str_pad($i, 2, "0", STR_PAD_LEFT) . 
+            $this->weeks[
+                date('w', strtotime($this->year . $this->month . str_pad($i, 2, "0", STR_PAD_LEFT)))
+            ]; 
 
-            }
-                return $this->dates;
+        }
+        return $this->dates;
             
     }
     //承認を待っている
-    public function index(){
-
-        
+    public function index()
+    {
         // \DB::enableQueryLog();
         // リレーション宣言（DB負荷軽減）
         $managements = Management::with(['user','approval'])->get();
@@ -72,7 +70,8 @@ class ApprovalController extends Controller{
         
         //managementsテーブルに紐づくリレーション先の情報を配列に保存
         //viewで表示する内容は、[申請元user名],[申請シフト年月],[申請状況]
-        foreach($managements as $management){
+        foreach($managements as $management)
+        {
             $lists[] = [
                 'name' => $management->user->name, 
                 'approval' => $management->approval->status_descriptions_id,
@@ -83,38 +82,33 @@ class ApprovalController extends Controller{
         
         $lists = collect($lists)->groupBy('approval')->toArray();
         
-        return view('admin/approval')->with([
-           'lists' => $lists
-        ]);
+        return view('admin.approval', compact('lists'));
        
     }
-    public function show($id, $user, $year){
-        
+    public function show($id, $user, $year)
+    {
         $shifts = Shift::where('monthly_id', $id)->get();
         $user_name = $user;
         $year_month = $year;
-        return view('admin/show')->with([
-            'shifts' => $shifts,
-            'user_name' => $user_name,
-            'year_month' => $year_month
-        ]);
+        
+        return view('admin.show', compact('shifts', 'user_name', 'year_month'));
     }
-    public function store(ApprovalRequest $request){     
+
+    public function store(ApprovalRequest $request)
+    {     
         $input = array();
         $input = $request->except('_token');
-        
-        
         
         $approval = ShiftsApproval::where('managements_id', $input['managements_id'])->first();
         
         $this->begin();
-            try{
-                $approval->status_descriptions_id = $input["status_descriptions_id"];
-                $approval->save();
-        $this->commit();
-                }catch(\Exception $e){
-        $this->rollback();
-                }
+        try{
+            $approval->status_descriptions_id = $input["status_descriptions_id"];
+            $approval->save();
+            $this->commit();
+        }catch(\Exception $e){
+            $this->rollback();
+        }
     }
     
 }
