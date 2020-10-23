@@ -1,16 +1,26 @@
 $(function(){
-//   console.log($('select[name="work_type_id"][value="0"]') == '');
-$('select[name="work_type_id"]').each(function() {
-	if ( $(this).val() == 0 ) {
-		$('#submit').prop('disabled', true);
-		return false;
-	}
-});
-     if($('input[name="status_descriptions_id"]').val() != 3){
-          $('#submit').prop('disabled', false);
-     }
+
+     // $('#submit').prop('disabled', true);
+
+// $('select[name="work_type_id"]').each(function() {
+// 	if ($(this).val() == 0) {
+// 		$('#submit').prop('disabled', true);
+// 	return false;
+// 	}
+// });
+// $('select[name="work_type_id"]').each(function() {
+//      var apply = $(this).attr('id');
+// 	if (apply == true) {
+// 		$('#submit').prop('disabled', false);
+// 	return true;
+// 	}
+// });
+
+	
+     
      //ステータス（status_descriptions_id)が1もしくは3ならば、承認中なので入力ができない。
      //ステータス（status_descriptions_id)が２もしくは空欄ならば、入力が可能。
+     
      var status = $('input[name="status_descriptions_id"]').val();
           switch(status){
                case '1':
