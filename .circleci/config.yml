@@ -2,5 +2,47 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.3-node-browsers
-      - image: circleci/mariadb:10.4
+      # specify the version you desire here
+      - image: circleci/php:7.2.1-apache-node-browsers
+      - image: circleci/mysql:5.7
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mysql:9.4
+
+    environment:
+      - APP_DEBUG: true
+      - APP_ENV: testing
+      - APP_KEY: base64:pDP2fpNwBg+IRs+KGtg6uk5Menkgvi/UoOBg+qzOq4E=
+      - DB_CONNECTION: circle_test
+      - MYSQL_ALLOW_EMPTY_PASSWORD: true
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Install PHP Extension
+      - run: sudo docker-php-ext-install pdo_mysql
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "composer.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: composer install -n --prefer-dist
+
+      - save_cache:
+          paths:
+            - ./vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
+
+      # run seeding
+      - run: php artisan migrate
+      - run: php artisan db:seed
+
+      # run tests!
+      - run: php ./vendor/bin/phpunit
