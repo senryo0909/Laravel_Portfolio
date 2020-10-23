@@ -19,31 +19,33 @@ class PDFController extends Controller
 
 
     //$all['total'][0] = 08:00:00, $all['total'][1] = 08:00:00・・・
-    private function Plus(Array $times){
+    private function Plus(Array $times)
+    {
         $nums = array();
         $hours = 0;
         $minutes = 0;
         $total = 0;
         
             
-            //$time[0] = 08:00:00, $time[1] = 05:00:00
-            for($i = 0; $i < count($times); $i++){
-                //$time[$i = 0] = 08:00:00
-                //exlode(":", $time[$i = 0]) = $num[0] = 08 * 60(時間を分に直す), $num[1] = 00.
-                //$hours = $hours('') + 08, $hours('8') + 05・・・
-                
-                $nums[] = explode(":", $times[$i]);
-                $hours =+ $hours + ($nums[$i][0] * 60);
-                $minutes =+ $minutes + ($nums[$i][1] * 60);
-                
-            }
-             $total = ($hours + $minutes) / 60;
-            return $total;
+        //$time[0] = 08:00:00, $time[1] = 05:00:00
+        for($i = 0; $i < count($times); $i++){
+            //$time[$i = 0] = 08:00:00
+            //exlode(":", $time[$i = 0]) = $num[0] = 08 * 60(時間を分に直す), $num[1] = 00.
+            //$hours = $hours('') + 08, $hours('8') + 05・・・
+            
+            $nums[] = explode(":", $times[$i]);
+            $hours =+ $hours + ($nums[$i][0] * 60);
+            $minutes =+ $minutes + ($nums[$i][1] * 60);
+            
+        }
+        $total = ($hours + $minutes) / 60;
+        return $total;
             
   
     }
     
-    public function index($id, $user, $year){
+    public function index($id, $user, $year)
+    {
         //年月 = $year
         //氏名 = $user
         //従業員コード = $all['user_id]
@@ -69,27 +71,27 @@ class PDFController extends Controller
             $all['total'][] = $shift->total;
             $all['rest'][] = $shift->rest_time;
             
-            switch($shift->work_type_id){
-                //出勤 = work_type_id = 1
-                case 1:
-                    $work++;
-                    break;
-                case 2:
-                    $off++;
-                    break;
-                case 3:
-                    $sick++;
-                    break;
-                case 4:
-                    $early++;
-                    break;
-                case 5:
-                    $half++;
-                    break;
-                case 6:
-                    $weekend++;
-                    break;
-            }
+        switch($shift->work_type_id){
+            //出勤 = work_type_id = 1
+            case 1:
+                $work++;
+                break;
+            case 2:
+                $off++;
+                break;
+            case 3:
+                $sick++;
+                break;
+            case 4:
+                $early++;
+                break;
+            case 5:
+                $half++;
+                break;
+            case 6:
+                $weekend++;
+                break;
+        }
             $user_id = $shift->user_id;
         }
         $all['type'] = array([
