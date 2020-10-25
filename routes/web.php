@@ -11,13 +11,101 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-// ユーザ登録
+Route::get('/', function(){ return view('welcome'); })->name('welcome');
 
-Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login')->name('login.post');
-Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
-Route::get('/signin', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
-Route::post('signup', 'Auth\RegisterController@register')->name('signup.post');
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function(){  
+
+    Auth::routes([
+        'register' => true,
+        'reset'    => false,
+        'verify'   => false
+    ]);
+
+    Route::middleware('auth:admin')->group(function () {
+        Route::resource('home', 'HomeController', ['only' => 'index']);
+        Route::get('/approval/index', 'ApprovalController@index')->name('approval.index');
+        Route::get('/approval/show/{id}/{user}/{year}', 'ApprovalController@show')->name('approval.show');
+        Route::post('/approval/store', 'ApprovalController@store')->name('approval.store');
+        Route::get('pdf/{id}/{user}/{year}','PDFController@index')->name('pdf');
+    });
+});
+
+Route::namespace('User')->prefix('user')->name('user.')->group(function(){
+    
+    Auth::routes([
+        'register' => true,
+        'reset'    => false,
+        'verify'   => false
+    ]);
+
+    Route::middleware('auth:user')->group(function () {
+       
+        // TOPページ
+        Route::resource('home', 'HomeController', ['only' => 'index']);
+        Route::get('/shifts/index', 'ShiftController@index')->name('shifts.index');
+        Route::post('/shifts/index/store', 'ShiftController@store_ajax')->name('shift.ajax');
+        Route::post('/shifts/index/store/monthly', 'ShiftController@store_monthly')->name('shift.monthly');
+        Route::get('/shifts/index/{date}', 'ShiftController@switch')->name('shifts.switch');
+        
+});
+    
+
+
+});
+
+
+
+
+// Route::namespace('User')->prefix('user')->name('user.')->group(function () {
+
+//     // ログイン認証関連
+//     Auth::routes([
+//         'login' => true,
+//         'register' => true,
+//         'reset'    => true,
+//         'verify'   => true
+//     ]);
+
+//     // ログイン認証後
+//     Route::middleware('auth:user')->group(function () {
+
+//         // TOPページ
+//         Route::get('/shifts/index', 'ShiftController@index')->name('shifts.index');
+//         Route::post('/shifts/index/store', 'ShiftController@store_ajax')->name('shift.ajax');
+//         Route::post('/shifts/index/store/monthly', 'ShiftController@store_monthly')->name('shift.monthly');
+//         Route::get('/shifts/index/{date}', 'ShiftController@switch')->name('shifts.switch');
+
+
+
+//     });
+// });
+
+
+// Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+//Illuminate\Routing\Router.phpのroutes()メソッドでルーティングが表示される
+
+
+// /にアクセス
+// Route::get('/', function () { return redirect('/home'); });
+//TOPページにアクセス（ユーザー認証がコントローラーに処理を飛ばす前にかかる）
+// Route::group(['middleware' => 'auth:user'], function() {
+//     Auth::routes();
+//     Route::get('/home', 'HomeController@index')->name('home');
+// });
+//adminのルーティング
+// Route::group(['prefix' => 'admin'], function() {
+    //アクセス
+//     Route::get('/', function () { return redirect('/admin/home'); });
+//     Route::get('login', 'Admin\LoginController@showLoginForm')->name('admin.login');
+//     Route::post('login', 'Admin\LoginController@login');
+// });
+
+// Route::group(['middleware' => 'auth:user'], function(){
+//     Route::get('/shifts/index', 'ShiftController@index')->name('shifts.index');
+//     Route::post('/shifts/index/store', 'ShiftController@store_ajax')->name('shift.ajax');
+//     Route::post('/shifts/index/store/monthly', 'ShiftController@store_monthly')->name('shift.monthly');
+//     Route::get('/shifts/index/{date}', 'ShiftController@switch')->name('shifts.switch');
+
+
+// });
+
