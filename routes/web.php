@@ -41,6 +41,7 @@ Route::namespace('User')->prefix('user')->name('user.')->group(function(){
     Route::middleware('auth:user')->group(function () {
        
         // TOPページ
+        // Route:resource('/home', 'HomeController@index')->name('home.index');
         Route::resource('home', 'HomeController', ['only' => 'index']);
         Route::get('/shifts/index', 'ShiftController@index')->name('shifts.index');
         Route::post('/shifts/index/store', 'ShiftController@store_ajax')->name('shift.ajax');
@@ -48,9 +49,6 @@ Route::namespace('User')->prefix('user')->name('user.')->group(function(){
         Route::get('/shifts/index/{date}', 'ShiftController@switch')->name('shifts.switch');
         
 });
-    
-
-
 });
 
 
