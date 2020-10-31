@@ -98,8 +98,7 @@ class ApprovalController extends Controller
     {     
         $input = array();
         $input = $request->except('_token');
-        
-        $approval = ShiftsApproval::where('managements_id', $input['managements_id'])->first();
+        $approval = ShiftsApproval::where('managements_id', $input['managements_id'])->first();
         
         $this->begin();
         try{
