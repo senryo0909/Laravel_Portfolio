@@ -13,7 +13,6 @@ jobs:
  
       - image: circleci/mysql:5.7-ram
         environment:
-          - APP_KEY: 4FQIYBwPmZ7Y9gDeNxw3vVFJvlpf6C+qUANYDOILAkQ=
           - MYSQL_ALLOW_EMPTY_PASSWORD: true
           - MYSQL_DATABASE: test_sample
  
@@ -36,8 +35,8 @@ jobs:
           paths:
             - ./vendor
  
-      # - run: echo "APP_KEY=" > .env.testing
-      # - run: php artisan key:generate
+      - run: echo "APP_KEY=" > .env.testing
+      - run: php artisan key:generate
       # - run: php artisan migrate
  
       - run: ./vendor/bin/phpunit
