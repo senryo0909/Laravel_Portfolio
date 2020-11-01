@@ -5,9 +5,9 @@ jobs:
     docker:
       - image: circleci/php:7.3-node-browsers 
       - image: circleci/mysql:5.7-ram
-        environment:
-          - MYSQL_ALLOW_EMPTY_PASSWORD: true
-          - MYSQL_DATABASE: test_sample
+        # environment:
+        #   - MYSQL_ALLOW_EMPTY_PASSWORD: true
+        #   - MYSQL_DATABASE: test_sample
     environment:
       - APP_DEBUG: true
       - APP_ENV: circle_test
@@ -15,6 +15,7 @@ jobs:
       - DB_CONNECTION: circle_test
       - DB_DATABASE: test_sample
       - DB_USERNAME: root
+      - MYSQL_ALLOW_EMPTY_PASSWORD: true
     steps:
       - checkout
 
