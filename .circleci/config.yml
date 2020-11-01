@@ -38,8 +38,8 @@ jobs:
           paths:
             - ./vendor
  
-      - run: echo "APP_KEY=" > .env.testing
-      - run: php artisan key:generate --env=testing
+      # - run: echo "APP_KEY=" > .env.testing
+      # - run: php artisan key:generate --env=testing
       # - run: php artisan migrate
       
  
