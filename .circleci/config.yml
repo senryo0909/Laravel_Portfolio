@@ -11,10 +11,11 @@ jobs:
         - DB_DATABASE: test_sample
         - DB_USERNAME: root
 
-    - image: circleci/mysql:5.7-ram
-      environment:
-        - MYSQL_ALLOW_EMPTY_PASSWORD: true
-        - MYSQL_DATABASE: test_sample
+      - image: circleci/mysql:5.7-ram
+        environment:
+          - MYSQL_ALLOW_EMPTY_PASSWORD: true
+          - MYSQL_DATABASE: test_sample
+          
     steps:
       - checkout
 
