@@ -17,6 +17,8 @@ jobs:
       - DB_DATABASE: test_sample
       - DB_USERNAME: root
       - MYSQL_ALLOW_EMPTY_PASSWORD: true
+    working_directory: ~/repo
+    
     steps:
       - checkout
 
