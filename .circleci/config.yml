@@ -16,7 +16,8 @@ jobs:
       - APP_ENV: testing
       - APP_KEY: 4FQIYBwPmZ7Y9gDeNxw3vVFJvlpf6C+qUANYDOILAkQ=
       - DB_CONNECTION: circle_test
-      - MYSQL_ALLOW_EMPTY_PASSWORD: true
+      - DB_PASSWORD: root3desu4
+      - DB_USERNAME: root
 
     working_directory: ~/repo
 
