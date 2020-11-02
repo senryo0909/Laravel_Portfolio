@@ -4,20 +4,20 @@ jobs:
   build:
     docker:
       - image: circleci/php:7.2-apache-node-browsers
-      environment:
-      - DB_HOST=127.0.0.1
-      - DB_PORT=3306
-      - DB_DATABASE=test_sample
-      - DB_USERNAME=root
-      - DB_PASSWORD=root3desu4
+        environment:
+        - DB_HOST=127.0.0.1
+        - DB_PORT=3306
+        - DB_DATABASE=test_sample
+        - DB_USERNAME=root
+        - DB_PASSWORD=root3desu4
     working_directory: /tmp
     
-    - image: circleci/mysql:5.6.39-ram
-      environment:
-      - MYSQL_ROOT_PASSWORD=circleci
-      - MYSQL_DATABASE=test_sample
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root3desu4
+      - image: circleci/mysql:5.6.39-ram
+        environment:
+        - MYSQL_ROOT_PASSWORD=circleci
+        - MYSQL_DATABASE=test_sample
+        - MYSQL_USER=root
+        - MYSQL_PASSWORD=root3desu4
 
     steps:
       - checkout
