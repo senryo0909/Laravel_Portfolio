@@ -10,7 +10,7 @@ jobs:
         - DB_DATABASE=sample_test
         - DB_USERNAME=circleci
         - DB_PASSWORD=circleci
-      - image: circleci/mysql:5.6.39-ram
+      - image: circleci/mysql:5.7-ram
         environment:
         - MYSQL_ROOT_PASSWORD=circleci
         - MYSQL_DATABASE=sampe_test
