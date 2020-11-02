@@ -18,9 +18,22 @@ jobs:
         - MYSQL_PASSWORD=root3desu4
     steps:
       - checkout
-      - run:
-          name: install dependecies
-          command: composer install 
+  
+      - run: sudo composer self-update --1
+      - run: sudo apt update
+      - run: sudo docker-php-ext-install pdo_mysql
+  
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.json" }}
+            - v1-dependencies-
+  
+      - run: composer install -n --prefer-dist
+  
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
       - run:
           name: install dockerize
           command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
