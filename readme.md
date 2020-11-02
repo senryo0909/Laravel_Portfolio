@@ -60,8 +60,7 @@ $ vim Vagrantfile
 
 The follow are to be pasted to original Vagrantfile
 
----------------Vagrantfile sample-------------------------------
-
+```
 VM_BOX = 'centos/7'
 NW_LAN = false
 NW_IP     = '192.168.1.100'
@@ -86,7 +85,7 @@ host = RbConfig::CONFIG['host_os']
 
 if host =~ /darwin/
     
-    mem = `sysctl -n hw.memsize`.to_i / 1024
+    mem = 'sysctl -n hw.memsize'.to_i / 1024
 elsif host =~ /linux/
     
     mem = `grep 'MemTotal' /proc/meminfo | sed -e 's/MemTotal://' -e 's/ kB//'`.to_i 
@@ -289,7 +288,7 @@ docker-compose up -d
 
 config.ssh.insert_key = false
 end
-
+```
 
 Then, "git clone" from https://github.com/senryo0909/Laravel_Portfolio to public_html directroy
 
