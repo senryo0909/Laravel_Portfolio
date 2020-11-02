@@ -55,8 +55,9 @@ $ vagrant init
 ```
 
 ** Revised Vagrantfile ** 
-
+```
 $ vim Vagrantfile
+```
 
 The follow are to be pasted to original Vagrantfile
 
