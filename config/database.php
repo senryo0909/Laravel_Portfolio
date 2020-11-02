@@ -97,7 +97,7 @@ return [
             'port' => '3306',
             'database' => 'test_sample',
             'username' => 'root',
-            'password' => '',
+            'password' => 'root3desu4',
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
