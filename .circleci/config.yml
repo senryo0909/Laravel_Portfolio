@@ -10,6 +10,8 @@ jobs:
       - DB_DATABASE=test_sample
       - DB_USERNAME=root
       - DB_PASSWORD=root3desu4
+    working_directory: /tmp
+    
     - image: circleci/mysql:5.6.39-ram
       environment:
       - MYSQL_ROOT_PASSWORD=circleci
