@@ -82,18 +82,18 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--audio", "none"]
 
-    host = RbConfig::CONFIG['host_os']
-    # Give VM 1/4 system memory 
-    if host =~ /darwin/
-      # sysctl returns Bytes and we need to convert to MB
-      mem = `sysctl -n hw.memsize`.to_i / 1024
-    elsif host =~ /linux/
-      # meminfo shows KB and we need to convert to MB
-      mem = `grep 'MemTotal' /proc/meminfo | sed -e 's/MemTotal://' -e 's/ kB//'`.to_i 
-    elsif host =~ /mswin|mingw|cygwin/
-      # Windows code via https://github.com/rdsubhas/vagrant-faster
-      mem = `wmic computersystem Get TotalPhysicalMemory`.split[1].to_i / 1024
-    end
+host = RbConfig::CONFIG['host_os']
+
+if host =~ /darwin/
+    
+    mem = `sysctl -n hw.memsize`.to_i / 1024
+elsif host =~ /linux/
+    
+    mem = `grep 'MemTotal' /proc/meminfo | sed -e 's/MemTotal://' -e 's/ kB//'`.to_i 
+elsif host =~ /mswin|mingw|cygwin/
+    
+    mem = `wmic computersystem Get TotalPhysicalMemory`.split[1].to_i / 1024
+end
 
     mem = mem / 1024 / 4
     vb.customize ["modifyvm", :id, "--memory", mem]
@@ -177,7 +177,8 @@ yes | docker network create --driver bridge private_network
 
 rm -rf docker-compose.yml
 cat > docker-compose.yml << "EOF"
-  # docker-compose.ymlの設定
+# docker-compose.ymlの設定
+
 version: '3'
 services:
     nginx:
@@ -286,9 +287,9 @@ cd ~/docker
 docker-compose up -d
   SHELL
 
-  config.ssh.insert_key = false
+config.ssh.insert_key = false
 end
---------------------------------------------------------------------------
+
 
 Then, "git clone" from https://github.com/senryo0909/Laravel_Portfolio to public_html directroy
 
@@ -296,9 +297,21 @@ Then, "git clone" from https://github.com/senryo0909/Laravel_Portfolio to public
 $ git clone https://github.com/senryo0909/Laravel_Portfolio
 ```
 
+When you wanna order something to Laravel...
+
+```
+$ cd vagrant_web && vagrant ssh
+$ sudo su
+$ cd ~ && cd docker/wwww && docker ps
+$ docker exec -it "Container ID" php artisan "whatover you want" 
+```
+
 ## Requirement Definition & External Design
 Definition
+
 https://drive.google.com/file/d/12flL6yEtFbtHIyg6bvr1Dc06B0y7wBe5/view?usp=sharing
+
 Outline design
+
 https://docs.google.com/document/d/1gfGPot0drEq-h0KXQRw7eCgYTl0EjJHG0k7sPfLVst8/edit?usp=sharing
 
