@@ -1,77 +1,57 @@
-@extends('layouts.user.register')
+@extends('layout.auth.app')
+
+@section('title', '従業員登録')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}（従業員用）</div>
+<main>
+<div class="container-fluid" style="height: 1000px;">
+    <div class="row">
+      <div class="mx-auto col-12">
+        <h1 class="text-center h1"><a class="text-dark" href="/">登録してね！</a></h1>
+        <div class="card mt-3 h-100">
+          <div class="card-body text-center">
+          <h2 class="h2 card-title text-center mt-5 mb-5">ユーザー登録</h2>
+            <!-- errorメッセージを表示する組み込みテンプレート・効率化-->
+            @include('auth.error_card_list')
+            <div class="card-text">
+              <form method="POST" action="{{ route('user.register') }}">
+                @csrf
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('user.register') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="md-form mb-5 mt-5">
+                  <label for="name">ユーザー名</label>
+                  <input class="form-control" type="text" id="name" name="name" required value="{{ old('name') }}">
+                  <small>英数字3〜16文字(登録後の変更はできません)</small>
                 </div>
+
+                <div class="md-form mb-5 mt-5">
+                  <label for="email">メールアドレス</label>
+                  <input class="form-control" type="text" id="email" name="email" required value="{{ old('email') }}" >
+                </div>
+
+                <div class="md-form mb-5 mt-5">
+                  <label for="password">パスワード</label>
+                  <input class="form-control" type="password" id="password" name="password" required>
+                  @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+                </div>
+                
+                <div class="md-form mb-5 mt-5">
+                  <label for="password_confirmation">パスワード(確認)</label>
+                  <input class="form-control" type="password" id="password_confirmation" name="password_confirmation" required>
+                </div>
+                <button class="btn btn-block blue-gradient mt-2 mb-2" type="submit">ユーザー登録</button>
+              </form>
+              <div class="mt-0 h1">
+                <a href="{{ route('user.login') }}" class="card-text">ログインはこちら</a>
+              </div>        
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+</main>
 @endsection

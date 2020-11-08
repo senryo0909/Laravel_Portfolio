@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+//エラーの場合に、FormRequest内でリダイレクトが発生するため、エラ〜メッセージを投げたいならFormRequest::failedValidation()をオーバーライドする
+// use Illuminate\Contracts\Validation\Validator;  // 追加
+// use Illuminate\Http\Exceptions\HttpResponseException;  // 追加
 
 class StoreShiftPost extends FormRequest
 {
@@ -14,6 +17,7 @@ class StoreShiftPost extends FormRequest
     public function authorize()
     {
         return true;
+        
     }
 
     /**
@@ -23,23 +27,47 @@ class StoreShiftPost extends FormRequest
      */
     public function rules()
     {
-        return [
-            'user_id' => 'required',
-            'column' => 'required',
-            'values' => 'required',
-            'date' => 'required',
-            'id' => 'nullable',
-            'comments' => 'nullable'
-        ];
+        if(($this->input("column")) == "comments"){
+            return [
+                'values' => 'nullable|max:20',
+            ];
+        }
     }
-    // public function attributes()
+
+    public function messages()
+    {
+      if(($this->input("column")) == "comments"){
+        
+        return [
+            'values.max' => ' コメントは20文字以内',
+        ];
+        }
+  }
+
+    // public function response(array $errors)
     // {
-    // return [
-    //     'user_id' => 'タスク名',
-    //     'column' => 'タスク期限',
-    //     'values' => 'タスク詳細',
-    //     'date' => '日時',
-    //     'id' => '主キー'
+    //     if ($this->ajax() || $this->wantsJson()) {
+    //         # ここでいじれる
+    //         return new JsonResponse(['errors'=>$errors], 422);
+    //     }
+
+    //     parent::response($errors);
+    // }
+    // public function messages()
+    // {
+    //     return [
+    //         'comments.max' => '文字数は最大20字です'
     //     ];
+    // }
+    // protected function failedValidation( Validator $validator )
+    // {
+    //     $response['data']    = [];
+    //     $response['status']  = 'NG';
+    //     $response['summary'] = 'Failed validation.';
+    //     $response['errors']  = $validator->errors()->toArray();
+
+    //     throw new HttpResponseException(
+    //         response()->json( $response, 422 )
+    //     );
     // }
 }

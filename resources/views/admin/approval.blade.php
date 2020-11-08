@@ -1,4 +1,5 @@
-@extends('layouts.admin.app')
+@extends('layout.A_app')
+@section('title', '承認画面')
 @section('content')
 <main>
 <div class="d-flex p-2 justify-content-around">
@@ -6,7 +7,7 @@
 @if(isset($lists[1]))
 <section class="applying d-inline-flex p-2">
     <div>
-        <p class="mx-auto">申請中</p>
+        <p class="mx-auto h1">申請中</p>
         <table class="table-bordered">
         <thead>
             <tr>
@@ -24,7 +25,6 @@
                 <td><a href="{{ route('admin.approval.show', ['id' => $lists[1][$i]['id'], 'user' => $lists[1][$i]['name'], 'year' => $lists[1][$i]['year']]) }} " target="_blank">こちら</a></td>
                 <td>
                     <select name="applying" id="{{ $lists[1][$i]['id'] }}">
-                        <!-- <option value="0">選んでください</option> -->
                         <option selected value="{{ $lists[1][$i]['approval'] }}">申請中</option>
                         <option value="2">差し戻し</option>
                         <option value="3">承認</option>
@@ -39,7 +39,7 @@
 @elseif(!isset($lists[1]))
 <section class="applying d-inline-flex p-2">
     <div>
-        <p class="mx-auto">申請中一覧</p>
+        <p class="mx-auto h1">申請中一覧</p>
             <p>申請中のデーターがありません</p>
     </div>
 </section>
@@ -47,7 +47,7 @@
 @if(isset($lists[2]))
 <section class="decline d-inline-flex p-2">
     <div>
-    <p class="mx-auto">差し戻し<p>
+    <p class="mx-auto h1">差し戻し<p>
         <table class="table-bordered">
         <thead>
             <tr>
@@ -81,15 +81,15 @@
 @elseif(!isset($lists[2]))
 <section class="decline d-inline-flex p-2">
     <div>
-        <p class="mx-auto">差し戻し一覧</p>
+        <p class="mx-auto h1">差し戻し一覧</p>
             <p>差し戻し中のデーターがありません</p>
     </div>
 </section>
 @endif
 @if(isset($lists[3]))
-<section class="approved d-inline-flex p2">
+<section class="approved d-inline-flex p-2">
     <div>
-        <p class="mx-auto">承認済み一覧<p>
+        <p class="mx-auto h1">承認済み一覧<p>
         <table class="table-bordered">
         <thead>
             <tr>
@@ -129,18 +129,19 @@
 @elseif(!isset($lists[3]))
 <section class="approved d-inline-flex p2">
     <div>
-        <p class="mx-auto">承認一覧</p>
+        <p class="mx-auto h1">承認一覧</p>
             <p>承認中のデーターがありません</p>
     </div>
 </section>
 @endif
 </div>
 <div class="text-center">
-<a class="text-center" href="{{ url()->previous() }}">戻る</a>
+<a class="btn btn-lg" href="{{ url()->previous() }}" role="button">戻る</a>
+<!-- <a class="text-center" href="{{ url()->previous() }}">戻る</a> -->
 </div>
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="{{ asset('/js/approve.js') }}"></script>
 @endsection
