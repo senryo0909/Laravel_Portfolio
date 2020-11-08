@@ -32,6 +32,8 @@ Project is created with:
 * jQuery: version:3.5.1
 * Bootstrap version:4
 * CSS version:3
+* PHP 7.4
+* PHPUnit 
 
 ## Usage
 ** Preferred to use Mac or Linux **
