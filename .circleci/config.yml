@@ -7,8 +7,8 @@ jobs:
           - APP_DEBUG: true
           - APP_ENV: testing
           - DB_CONNECTION: circle_test
-          - DB_DATABASE: test_sample
-          - DB_USERNAME: root
+          # - DB_DATABASE: test_sample
+          # - DB_USERNAME: root
  
       - image: circleci/mysql:5.7-ram
         environment:
@@ -37,4 +37,4 @@ jobs:
       # - run: php artisan key:generate
       # - run: php artisan migrate
  
-      - run: ./vendor/bin/phpunit
+      # - run: ./vendor/bin/phpunit
