@@ -18,12 +18,12 @@
 
                 <div class="md-form mb-5 mt-5">
                   <label for="email">メールアドレス</label>
-                  <input class="form-control" type="text" id="email" name="email" required value="{{ old('email') }}">
+                  <input class="form-control" type="text" id="email" name="email" required value="abc123@gmail.com"{{ old('email') }}">
                 </div>
 
                 <div class="md-form mb-5 mt-5">
                   <label for="password">パスワード</label>
-                  <input class="form-control" type="password" id="password" name="password" required>
+                  <input class="form-control" type="password" id="password" name="password" required value="abcd1234">
                 </div>
                 <input type="hidden" name="remember" id="remember" value="on">
 

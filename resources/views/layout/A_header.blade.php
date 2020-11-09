@@ -12,7 +12,7 @@
         <i class="fas fa-3x fa-user-circle"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-right dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-        <button class="dropdown-item" type="button"
+        <button class="dropdown-item" type="button" 
                 onclick="location.href='#'">
           マイページ<span class="text-danger">**現在作成中</span>
         </button>
