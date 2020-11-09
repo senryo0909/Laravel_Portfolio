@@ -4,7 +4,7 @@
 
 @section('content')
 <main>
-  <div class="container-fluid" style="height: 1000px;">
+  <div class="container" style="height: 1000px;">
     <div class="row">
       <div class="mx-auto col-12">
         <h1 class="text-center h1"><a class="text-dark" href="/">ユーザーログイン</a></h1>

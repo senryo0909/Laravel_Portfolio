@@ -14,7 +14,7 @@
     <!-- <link rel="stylesheet" href="/css/styles.css"> -->
 </head>
 <body>
-     <div class="text-center w-100 h-100">
+     <div class="text-center w-100">
         <h1>ようこそ業務管理アプリへ</h1>
         <div class="mt-5">
             <a href="{{ route('user.login') }}">従業員はこちら</a>
