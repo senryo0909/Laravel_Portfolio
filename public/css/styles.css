@@ -13,17 +13,17 @@ html {
     margin: 0 auto;
     display: grid;
     grid-template: 
-        "header header header"
+        "header header header" 59px
         "...... ...... ......" 20px
         "center center center" 
         "center center center" 
         "center center center"
         "...... ...... ......" 20px
-        "footer footer footer"
+        "footer footer footer" 59px;
          /* auto 10px auto 1fr auto 10px auto; */
   }
   nav {
-    height: 60px;
+    /* height: 60px; */
   }
   header{
     grid-area: header;
@@ -35,7 +35,7 @@ html {
   }
   footer{
     grid-area: footer;
-    /* height: 60px; */
+    /* max-height: 60px; */
   }
   .card:hover{
     background-color: skyblue;
@@ -44,7 +44,7 @@ html {
   @media screen and (max-width: 1000px) {
     body{
       grid-template:
-        "header" 60px
+        "header"
         "....." 50px
         "center" 1fr
         "center" 1fr

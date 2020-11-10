@@ -4,10 +4,10 @@
 
 @section('content')
 <main>
-<div class="container-fluid" style="height: 1000px;">
+<div class="container”>
     <div class="row">
-      <div class="mx-auto col-12">
-        <h1 class="text-center h1"><a class="text-dark" href="/">登録してね！</a></h1>
+      <div class="mx-auto col-8">
+        <h1 class="text-center h1"><a class="text-dark">登録してね！</a></h1>
         <div class="card mt-3 h-100">
           <div class="card-body text-center">
           <h2 class="h2 card-title text-center mt-5 mb-5">ユーザー登録</h2>

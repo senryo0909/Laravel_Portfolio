@@ -1,4 +1,3 @@
-<!-- <header class="w-100">-->
 <header>
 <nav class="navbar navbar-expand navbar-dark bg-success">
 

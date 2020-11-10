@@ -4,10 +4,10 @@
 
 @section('content')
 <main>
-  <div class="container" style="height: 1000px;">
+  <div class="container">
     <div class="row">
-      <div class="mx-auto col-12">
-        <h1 class="text-center h1"><a class="text-dark" href="/">ユーザーログイン</a></h1>
+      <div class="mx-auto col-8">
+        <h1 class="text-center h1"><a class="text-dark">ユーザーログイン</a></h1>
         <div class="card mt-3 h-100">
           <div class="card-body text-center">
             <h2 class="h2 card-title text-center mt-5 mb-5">ログイン</h2>

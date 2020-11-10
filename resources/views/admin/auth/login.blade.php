@@ -4,9 +4,9 @@
 
 @section('content')
 <main>
-  <div class="container-fluid" style="height: 1000px;">
+  <div class="container">
     <div class="row">
-      <div class="mx-auto col-12">
+      <div class="mx-auto col-offset-8">
         <h1 class="text-center h1"><a class="text-dark" href="/">管理者ログイン</a></h1>
         <div class="card mt-3 h-100">
           <div class="card-body text-center">
@@ -17,12 +17,12 @@
                 @csrf
 
                 <div class="md-form mb-5 mt-5">
-                  <label for="email">メールアドレス</label>
+                  <label for="email"><p class="h3">メールアドレス</p></label>
                   <input class="form-control" type="text" id="email" name="email" required value="admin@gmail.com{{ old('email') }}">
                 </div>
 
                 <div class="md-form mb-5 mt-5">
-                  <label for="password">パスワード</label>
+                  <label for="password"><p class="h2">パスワード</p></label>
                   <input class="form-control" type="password" id="password" name="password" value="admin1234" aequired>
                 </div>
                 <input type="hidden" name="remember" id="remember" value="on">
