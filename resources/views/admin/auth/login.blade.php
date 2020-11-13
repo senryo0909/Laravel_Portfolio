@@ -1,12 +1,13 @@
 @extends('layout.auth.app')
 
 @section('title', 'ログイン')
+         
 
 @section('content')
 <main>
   <div class="container">
     <div class="row">
-      <div class="mx-auto col-offset-8">
+      <div class="mx-auto col-8">
         <h1 class="text-center h1"><a class="text-dark" href="/">管理者ログイン</a></h1>
         <div class="card mt-3 h-100">
           <div class="card-body text-center">
