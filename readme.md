@@ -1,4 +1,4 @@
-# Operation System
+# Operating System
 This is for my internal member to improve our production.
 Being created with Laravel, MySQL, Javascript(jQuery) based on Vagrant & Docker.
 
@@ -12,10 +12,10 @@ Being created with Laravel, MySQL, Javascript(jQuery) based on Vagrant & Docker.
 - [Technologies](#Technologies)
 
 ## Demo
-Currently in developping to AWS. please refer to some pictures as below for UI/UX examples.
+Currently in developing to AWS. Please refer to some pictures as these belows for UI/UX examples.
 
 ## Purpose
-As a Manager, had been struggling to improve operation cost. Then i started learning how to build the system to slove the issue from scratch by myself.
+As a Manager, had been struggling to improve operation cost. Then i started learning how to build the system to solve the issue from scratch by myself.
 Since could not make it to launch until leaved from previous company, developing this system as learning how to coding Laravel is my first priority now...
 
 ## Functionalities
@@ -24,7 +24,7 @@ Since could not make it to launch until leaved from previous company, developing
 * PDF output (convert shift data to PDF and printout)
 * update your shift and acquire "Approval" or "push back" or "application" status.
 * REST API
-* CI pipline with CircleCI & Github
+* CI pipeline with CircleCI & Github
 
 ## Technologies
 Project is created with:
@@ -61,7 +61,7 @@ $ vagrant init
 $ vim Vagrantfile
 ```
 
-The follow are to be pasted to original Vagrantfile
+The follow is to be pasted to original Vagrantfile
 
 ```
 VM_BOX = 'centos/7'
