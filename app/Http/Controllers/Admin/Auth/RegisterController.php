@@ -49,11 +49,13 @@ class RegisterController extends Controller
 
     protected function guard()
     {
-        return Auth::guard('admin'); //admin用のguardを設定
+        //admin用のguard変更をIlluminate\Support\Facades\Authからオーバーライド
+        return Auth::guard('admin'); 
     }
     
     public function showRegistrationForm()
     {
+        
         return view('admin.auth.register'); 
     }
 
@@ -67,6 +69,7 @@ class RegisterController extends Controller
 
     protected function validator(array $data)
     {
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -91,4 +94,12 @@ class RegisterController extends Controller
 
     
 }
-
+//registerは、入力を受付->登録->指定のページに反映の流れ。
+//RegistersUsers;というトレイトをuseし、そのメソッドを使って、登録->指定ページへ反映させてる。
+//登録はRegisterUsersのregisterメソッド。登録に追加の処理を記載するにはトレイト最後にあるgesteredメソッド。
+//ここは通常ではからのため、return $this->registered($request, $user)?: redirect($this->redirectPath());が指定ページの反映を処理
+//redirectは引数のURIに対して値を受け取る。引数には$this(トレイトを利用するRegisterController)にredirectPathは、
+//トレイトがさらにRedirectsUsersというトレイトをuseしていて、そこに定義されたメソッドである
+//public function redirectPath(){if (method_exists($this, 'redirectTo')) {return $this->redirectTo()}return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';}
+//内容は、RegisterControllerにredirectToメソッドがあれば、そのプロパティの値を返す。
+//定義なければ、$this->redirectTo : '/home'つまり、このページの38行目に定義されたプロパティーの存在に返り値を指定する。

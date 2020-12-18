@@ -56,14 +56,24 @@ class LoginController extends Controller
 
     protected function guard()
     {
+        //admin用のguard変更をIlluminate\Support\Facades\Authからオーバーライド
         return Auth::guard('admin'); 
     }
 
     public function logout(Request $request)
     {
-        Auth::guard('admin')->logout();
-
+        
+        $this->guard('admin')->logout();
+        
+        //sessionを作り直し
+        $request->session()->invalidate();
+        
+        //トークンの作り直し
+        $request->session()->regenerateToken();
+        
+        //loggedOutメソッドをオーバーライドで呼び出し、/へリダイレクト
         return $this->loggedOut($request);
+
     }
     public function loggedOut(Request $request)
     {

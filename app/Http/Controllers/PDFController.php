@@ -110,8 +110,9 @@ class PDFController extends Controller
 
        
     	// $pdf = PDF::loadview('admin.pdf', compact('shifts', all['type'], $user, $year, $user_id, $totalTimes, $totalRest));
-        $pdf = PDF::loadView('shift_pdf', compact('shifts', 'totalTimes', 'totalRest', 'all', 'user_id', 'year', 'user'));
+        $pdf = PDF::loadView('admin.shift_pdf', compact('shifts', 'totalTimes', 'totalRest', 'all', 'user_id', 'year', 'user'));
      
-        return $pdf->stream('shift_pdf.pdf');
+        // return $pdf->stream('admin.shift_pdf.pdf');
+        return $pdf->stream('admin.shift_pdf');
     }
 }

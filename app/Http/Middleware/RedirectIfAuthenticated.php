@@ -15,6 +15,8 @@ class RedirectIfAuthenticated
      * @param  string|null  $guard
      * @return mixed
      */
+
+     //ログイン中にログインフォームへアクセスしたときのアクセス振り先の指定
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check() && $guard === 'user'){

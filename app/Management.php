@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Management extends Model
 {    
+    protected $table = 'managements';
     public $timestamps = false;
     //managementsの１レコードに対して、usersの1つのレコードが紐付けられる
     

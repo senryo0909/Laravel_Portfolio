@@ -62,8 +62,9 @@ class ApprovalController extends Controller
     public function index()
     {
         // \DB::enableQueryLog();
-        // リレーション宣言（DB負荷軽減）
+        // リレーション宣言（DB負荷軽減）で、user_idに紐づくuserの名前と、approval_idの数字に対応した日本語で書かれたステータスを加えたmanagementテーブルを作成
         $managements = Management::with(['user','approval'])->get();
+        
 
         // dd(\DB::getQueryLog());
         $lists = array();
@@ -79,8 +80,9 @@ class ApprovalController extends Controller
                 'id' => $management->id
             ];
         }
-        
+        //コレクションメソッドで承認状況を表す数字1−３をもつstatus_descriptions_idをキー値として配列をまとめ、toArrayで配列に戻す。
         $lists = collect($lists)->groupBy('approval')->toArray();
+
         
         return view('admin.approval', compact('lists'));
        
@@ -108,6 +110,7 @@ class ApprovalController extends Controller
         }catch(\Exception $e){
             $this->rollback();
         }
+        return response()->json(["data" => "申請完了"]);
     }
     
 }
