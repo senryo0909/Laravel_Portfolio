@@ -1,51 +1,48 @@
-@extends('layout.app')
-
-@section('title', 'shift')
-
- @section('layout.side')
-@endsection 
-
+@extends('layout.U_app')
+@section('title', '勤怠入力')
 @section('content')
-<div class="mt-1">
+<!-- <div class="mt-1"> -->
     {{-- 過去未来のシフト検索 --}}
-    <div style="width: 100%">
-        <a class="btn btn-primary text-light d-inline-block" href="{{ route('user.shifts.switch', ['dates' => date('Y-m-d', strtotime(date($dateNum).'-1 month')) ]) }}" role="button" style="width:100px">前月</a>
-        <a class="d-inline-block" style="font-size: 2rem; width: 250px;">{!! substr($dates[0], 0, 4) !!}年{!! substr($dates[0], 5, 2) !!}月の勤務状況</a>
-        <a class="d-inline-block text-light btn btn-primary" href="{{ route('user.shifts.switch', ['dates' => date('Y-m-d', strtotime(date($dateNum).'+1 month')) ]) }}" role="button" style="width:100px">次月</a>
-    </div>
-    　{{-- シフト入力項目 --}}
-    <div class="mt-5">
-        <table class="table-bordered text-center mr-auto ml-auto w-100">
+
+    <!-- <div style="width: 100%"> -->
+    {{-- date(指定したフォーマット、1970からの時間経過の数字) = 2020-10-01など--}}
+    {{-- strtotime(基準の日時文字列2020-10-01など、基準となる日時) --}}
+        
+    
+    <!-- シフト入力項目 -->
+<main>
+  <div class="text-center">
+      <a class="btn btn-primary" href="{{ route('user.shifts.switch', ['dates' => date('Y-m-d', strtotime(date($dateNum).'-1 month'))]) }}">前月</a>
+      <span class="h3 align-middle">{!! substr($dates[0], 0, 4) !!}年{!! substr($dates[0], 5, 2) !!}月の勤務状況</span>
+      <a class="btn btn-primary" href="{{ route('user.shifts.switch', ['dates' => date('Y-m-d', strtotime(date($dateNum).'+1 month'))]) }}">次月</a>
+  </div>
+  <div class="mt-5">
+        <table class="table-bordered text-center w-100">
             <thead>
               <tr>
-                <th scope="col" style="width: 30px">日付</th>
-                <th scope="col">勤務形態</th>
-                <th scope="col">出勤</th>
-                <th scope="col">退勤</th>
-                <th scope="col">休憩</th>
-                <th scope="col">勤務時間</th>
-                <th scope="col" style="width: 100px">備考</th>
+                <th class="h2">日付</th>
+                <th class="h2">勤務形態</th>
+                <th class="h2">出勤</th>
+                <th class="h2">退勤</th>
+                <th class="h2">休憩</th>
+                <th class="h2">勤務時間</th>
+                <th class="h2">備考</th>
               </tr>
             </thead>   
         <tbody>
-
-      {{-- 勤怠入力済みの表示のスタート地点 --}}
-
-      {{--　年月日表示 --}}
+  <!--　年月日表示 -->
       @foreach($dates as $date)
+  <!-- 勤怠入力済みの表示のスタート地点 -->
         @if(isset($shifts[$date]))
-      {{--　土日は赤字で表示 --}}
-      {{-- ？土日は赤字で表示は、233行目でも書く必要ある？　--}}
+  <!--　土日は赤字で表示 -->
         @if(substr($shifts[$date]->date, -5, 5) === '(土)' || substr($shifts[$date]->date, -5, 5) === '(日)')
           <tr style="color: red;">
         @else
           <tr>
         @endif
-            <td>{{ $shifts[$date]->date }}</td>
+            <td class="h4">{{ $shifts[$date]->date }}</td>
             <td style="height: 10px;">
-      {{-- 勤務形態（入力済み）の表示 --}}
-      {{-- ?  勤怠入力済みなら、work_type_id（勤務形態）は、nullでは無いから（土日出勤もありうるので、土日は完全週休2日なら休日 --}}
-            <select id="true" name="work_type_id" data-id="{{ $shifts[$date]->id }}" data-date="{{ $shifts[$date]->date }}" style="display: inline-block; width: 100%; height: 100%">
+            <select id="true" name="work_type_id" data-id="{{ $shifts[$date]->id }}" data-date="{{ $shifts[$date]->date }}"style="display: inline-block; width: 100%; height: 100%">
               @if($shifts[$date]->work_type_id === null)
                 @for($i = 0; $i < 7; $i++)
                     @if($i === 0)
@@ -109,11 +106,6 @@
       <option value="00:00:00">0:00</option>
     @endif
 
-    <!-- @if($shifts[$date]->start_time === "09:00:00")
-      <option value="{{ substr($shifts[$date]->start_time, 0, 5) }}">9:00</option>
-    @elseif($shifts[$date]->start_time !== "09:00:00")
-      <option value="09:00:00">9:00</option>
-    @endif -->
     @for($i = 8; $i < 10; $i++);
      @if($shifts[$date]->start_time === "0" . $i . ":00:00")
       <option selected value="{{ substr($shifts[$date]->start_time, 0, 5) }}">{{ $i }}:00</option>
@@ -122,13 +114,13 @@
      @endif
   　@endfor
       
-      @for($i = 10; $i < 23; $i++);
-        @if($shifts[$date]->start_time === $i . ":00:00")
-          <option selected value="{{ substr($shifts[$date]->start_time, 0, 5) }}">{{ $i }}:00</option>
-        @elseif($shifts[$date]->start_time !==  $i . ":00:00")
-          <option value="{{ $i }}:00:00">{{ $i }}:00</option>
-        @endif
-      @endfor
+    @for($i = 10; $i < 23; $i++);
+      @if($shifts[$date]->start_time === $i . ":00:00")
+        <option selected value="{{ substr($shifts[$date]->start_time, 0, 5) }}">{{ $i }}:00</option>
+      @elseif($shifts[$date]->start_time !==  $i . ":00:00")
+        <option value="{{ $i }}:00:00">{{ $i }}:00</option>
+      @endif
+    @endfor
     
     </select>
   </td>
@@ -146,21 +138,21 @@
       <option value="00:00:00">0:00</option>
     @endif
 
-      @for($i = 8; $i < 10; $i++);
-        @if($shifts[$date]->end_time === "0" . $i . ":00:00")
-          <option selected value="{{ substr($shifts[$date]->end_time, 0, 5) }}">{{ $i }}:00</option>
-        @elseif($shifts[$date]->end_time !== "0" . $i . ":00:00")
-          <option value="0{{ $i }}:00:00">{{ $i }}:00</option>
-        @endif
-      @endfor
+    @for($i = 8; $i < 10; $i++);
+      @if($shifts[$date]->end_time === "0" . $i . ":00:00")
+        <option selected value="{{ substr($shifts[$date]->end_time, 0, 5) }}">{{ $i }}:00</option>
+      @elseif($shifts[$date]->end_time !== "0" . $i . ":00:00")
+        <option value="0{{ $i }}:00:00">{{ $i }}:00</option>
+      @endif
+    @endfor
 
-      @for($i = 10; $i < 23; $i++);
-        @if($shifts[$date]->end_time === $i . ":00:00")
-          <option selected value="{{ substr($shifts[$date]->end_time, 0, 5) }}">{{ $i }}:00</option>
-        @elseif($shifts[$date]->end_time !==  $i . ":00:00")
-          <option value="{{ $i }}:00:00">{{ $i }}:00</option>
-        @endif
-      @endfor
+    @for($i = 10; $i < 23; $i++);
+      @if($shifts[$date]->end_time === $i . ":00:00")
+        <option selected value="{{ substr($shifts[$date]->end_time, 0, 5) }}">{{ $i }}:00</option>
+      @elseif($shifts[$date]->end_time !==  $i . ":00:00")
+        <option value="{{ $i }}:00:00">{{ $i }}:00</option>
+      @endif
+    @endfor
     </select>
   </td>
   
@@ -184,13 +176,7 @@
     @if($shifts[$date]->total === null)
       <option selected value="00:00:00">選択してね</option> 
     @endif
-    <!-- @for($i = 0; $i < 16; $i++)
-        @if($shifts[$date]->total === 0 . $i . ':00:00')
-          <option selected value="{{ substr($shifts[$date]->total, 1, 5) }}">{{ $i }}:00</option>
-        @elseif($shifts[$date]->total !== 0 .$i . ":00:00")
-          <option value="{{ $i }}:00:00">{{ $i }}:00</option>
-        @endif
-    @endfor -->
+    
     @if($shifts[$date]->total_time === "00:00:00")
       <option value="{{ substr($shifts[$date]->end_time, 0, 5) }}">0:00</option>
     @elseif($shifts[$date]->total_time !== "00:00:00")
@@ -216,7 +202,7 @@
   </td>
 
   <td>
-    <input type="text" data-id="{{ $shifts[$date]->id }}" data-date="{{ $shifts[$date]->date }}" name="comments" maxlength="5" value="{{ $shifts[$date]->comments }}" placeholder="自由記載" style="display: inline-block; width: 100%;">
+    <input type="text" data-id="{{ $shifts[$date]->id }}" data-date="{{ $shifts[$date]->date }}" name="comments" value="{{ $shifts[$date]->comments }}" placeholder="自由記載" style="display: inline-block; width: 100%;">
   </td>
   <input type="hidden" data-id="{{ $shifts[$date]->id }}" data-date="{{ $shifts[$date]->date }}" name="monthly_id" value="{{ $shifts[$date]->monthly_id }}">
   <input type="hidden" data-id="{{ $shifts[$date]->id }}" data-date="{{ $shifts[$date]->date }}" name="user_id" value="{{ $shifts[$date]->user_id }}">
@@ -228,8 +214,8 @@
 
   @else
 
-  <!-- 勤怠入力なし -->
-  <!-- 土日は赤字 -->
+  {{-- 勤怠"未入力"表示のスタート地点 --}}
+  {{-- 土日は赤字 --}}
   @if(substr($date, -5, 5) === '(土)' || substr($date, -5, 5) === '(日)')
     <tr style="color: red;">
   @else
@@ -288,7 +274,7 @@
         </td>
 
         <td style="height: 10px;">
-          <input type="text" name="comments" data-id="" data-date="{{ $date }}" maxlength="5" value="" placeholder="自由記載" style="display: inline-block; width: 100%;">
+          <input id="err" type="text" name="comments" data-id="" data-date="{{ $date }}" value="" placeholder="自由記載" style="display: inline-block; width: 100%;">
         </td>
         <input type="hidden" data-id="" name="user_id" value="{{ Auth::user()->id }}">
         <input type="hidden" data-id="" name="monthly_id" value="">
@@ -298,12 +284,12 @@
     @endforeach
   </tbody>
 </table>
-    </div>
-    <div>
-     
+    <!-- </div> -->
+    <div class="text-center">
     <button type="submit" class="btn btn-primary mt-5" style="width: 100px" id="submit">申請</button>
     </div>
-</div>
+<!-- </div> -->
+</main>
 @endsection
 
 

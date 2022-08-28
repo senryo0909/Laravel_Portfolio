@@ -46,7 +46,7 @@ Route::namespace('User')->prefix('user')->name('user.')->group(function(){
         Route::get('/shifts/index', 'ShiftController@index')->name('shifts.index');
         Route::post('/shifts/index/store', 'ShiftController@store_ajax')->name('shift.ajax');
         Route::post('/shifts/index/store/monthly', 'ShiftController@store_monthly')->name('shift.monthly');
-        Route::get('/shifts/index/{date}', 'ShiftController@switch')->name('shifts.switch');
+        Route::get('/shifts/index/{dates}', 'ShiftController@switch')->name('shifts.switch');
         
 });
 });

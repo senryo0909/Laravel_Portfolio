@@ -13,7 +13,11 @@ class Authenticate extends Middleware
      * @return string
      */
 
+    //redirect先を同クラス内と継承先クラスの メソッド からのアクセス可能なprotectedで指定
+    protected $user_route  = 'user.login';
+    protected $admin_route = 'admin.login';
 
+     //middlewareが未認証ユーザーのアクセスをキャッチしたときのリダイレクト先の指定
     protected function redirectTo($request)
     {
         

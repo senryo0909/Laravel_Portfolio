@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\User;
 
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -82,7 +83,7 @@ class ShiftController extends Controller
         // ]);
 
         // compact関数は、引数指定された文字列をキーに => 変数 変換してくれる。
-        return view('shifts.index', compact('dates', 'shifts', 'dateNum'));
+        return view('user.index', compact('dates', 'shifts', 'dateNum'));
 
     }
 
@@ -98,15 +99,18 @@ class ShiftController extends Controller
         $dateNum = str_replace('-', '', $dates[0]);
         $dateNum = substr($dateNum, 0, 8);
       
-        return view('shifts.index', compact('dates', 'shifts', 'dateNum'));
+        return view('user.index', compact('dates', 'shifts', 'dateNum'));
     }
 
     public function store_ajax(StoreShiftPost $request)
     {
-        
+      
         //配列でリクエストを取得
         $input = array();
         $input = $request->except('_token');
+        // $validate_rule = Validator::make($input, [
+        //     'comments' => 'nullable|max:20',
+        // ]);
         //すでに登録済みのシフト情報の更新処理
         if ($input["id"]) {
             $shifts = Shift::find($input["id"]);     
@@ -122,7 +126,7 @@ class ShiftController extends Controller
             } elseif ($input["column"] === "total") {
                 $shifts->total = $input["values"];
             } elseif ($input["column"] === "comments") {
-                $shifts->comments = ($input["values"]);
+                $shifts->comments = $input["values"];
             }
         //新規登録の処理
         } elseif (!$input["id"]) {

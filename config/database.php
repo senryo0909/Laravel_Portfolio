@@ -93,11 +93,11 @@ return [
 
         'circle_test' => [
             'driver' => 'mysql',
-            'host' => '192.168.33.10',
+            'host' => '127.0.0.1',
             'port' => '3306',
             'database' => 'test_sample',
             'username' => 'root',
-            'password' => 'root3desu4',
+            'password' => '',
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',

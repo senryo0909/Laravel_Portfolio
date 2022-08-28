@@ -31,7 +31,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'welcome';
+    protected $redirectTo = '/user/home';
 
     /**
      * Create a new controller instance.
@@ -46,20 +46,33 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         
-        return view('user.auth.login');  //変更
+        return view('user.auth.login');
     }
     
  
     protected function guard()
     {
-        return Auth::guard('user');  //変更
+        //user用のguard変更をIlluminate\Support\Facades\Authからオーバーライド
+        return Auth::guard('user');
     }
 
+    // マルチ認証のため、ログアウト処理を分離。namespace Illuminate\Foundation\Auth\AuthenticatesUsersトレイトのloggoutメソッドをオーバーライド
+    
      public function logout(Request $request)
     {
-        Auth::guard('user')->logout();
-
+        // Auth::guard('user')->logout();
+        //Userからログアウトのリクエストがきたら。
+        $this->guard('user')->logout();
+        
+        //sessionを作り直し
+        $request->session()->invalidate();
+        
+        //トークンの作り直し
+        $request->session()->regenerateToken();
+        
+        //loggedOutメソッドをオーバーライドで呼び出し、/へリダイレクト
         return $this->loggedOut($request);
+        
     }
     public function loggedOut(Request $request)
     {
